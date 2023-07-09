@@ -2,6 +2,7 @@ import { Body, Controller, HttpCode, Post, UsePipes, ValidationPipe } from '@nes
 import { AuthDto } from './dto/auth.dto';
 import { AuthService } from './auth.service';
 import { TokenDto } from './dto/token.dto';
+import { Auth } from 'src/decorators/auth.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -23,8 +24,9 @@ export class AuthController {
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
-  @Post('refresh')
-  async rrefresh(@Body() dto: TokenDto) {
+  @Auth()
+  @Post('login/refresh')
+  async refresh(@Body() dto: TokenDto) {
     return await this.authService.getNewTokens(dto.token);
   }
 }

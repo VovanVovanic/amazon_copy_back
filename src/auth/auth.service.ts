@@ -15,14 +15,14 @@ export class AuthService {
   private readonly jwt: JwtService
  ) { }
 
- async getNewTokens(refreshToken:string){
+ async getNewTokens(refreshToken: string) {
   const res = await this.jwt.verifyAsync(refreshToken)
   if (!res) {
    throw new UnauthorizedException(INVALID_REFRESH_TOKEN)
   }
   else {
    const user = await this.prismaService.user.findUnique({
-    where:{id:res.id}
+    where: { id: res.id }
    })
    const tokens = await this.getTokens(user.id)
    return {
@@ -39,10 +39,10 @@ export class AuthService {
    user: this.returnUserFields(user),
    ...tokens
   }
-}
+ }
  async register(dto: AuthDto) {
   const oldUser = await this.prismaService.user.findUnique({
-   where:{email:dto.email}
+   where: { email: dto.email }
   })
   if (oldUser) {
    throw new BadRequestException(USER_EXIST)
@@ -68,33 +68,34 @@ export class AuthService {
 
  private async getTokens(userId: number) {
   const data = { id: userId }
-  
+
   const accessToken = this.jwt.sign(data, {
-   expiresIn:'1h'
+   expiresIn: '1h'
   })
 
   const refreshToken = this.jwt.sign(data, {
-   expiresIn:'7d'
+   expiresIn: '7d'
   })
 
-  return{accessToken, refreshToken}
+  return { accessToken, refreshToken }
  }
  private returnUserFields(user: User) {
   return {
    id: user.id,
-   email:user.email
+   email: user.email
+  }
  }
- }
- 
+
  private async validateUser(dto: AuthDto) {
   const user = await this.prismaService.user.findUnique({
-   where:{email:dto.email}
+   where: { email: dto.email }
   })
   if (!user) {
    throw new NotFoundException(NOT_FOUND)
   }
   else {
-   const validated = verify(user.password, dto.password)
+   console.log(verify(user.password, dto.password))
+   const validated = await verify(user.password, dto.password)
    if (!validated) {
     throw new UnauthorizedException(INVALID_PASSWORD)
    }
