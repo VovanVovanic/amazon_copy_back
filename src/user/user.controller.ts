@@ -1,6 +1,4 @@
 import { Body, Controller, Get, HttpCode, Param, Patch, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
-import { AuthDto } from 'src/auth/dto/auth.dto';
-import { TokenDto } from 'src/auth/dto/token.dto';
 import { Auth } from 'src/decorators/auth.decorator';
 import { CurrentUser } from 'src/decorators/currentUser';
 import { UserDto } from './dto/updateUser.dto';

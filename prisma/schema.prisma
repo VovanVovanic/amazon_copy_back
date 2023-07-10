@@ -33,11 +33,11 @@ model Product {
   description String
   price       Int
   images      String[]
-  category    Category    @relation(fields: [categoryId], references: [id])
+  category    Category    @relation(fields: [categoryId], references: [id],onDelete: Cascade, onUpdate: Cascade)
   categoryId  Int         @map("category_id")
   reviews     Review[]
   items       OrderItem[]
-  user        User?       @relation(fields: [userId], references: [id])
+  user        User?       @relation(fields: [userId], references: [id],onDelete: Cascade, onUpdate: Cascade)
   userId      Int?        @map("user_id")
 }
 

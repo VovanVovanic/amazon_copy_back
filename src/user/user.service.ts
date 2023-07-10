@@ -1,9 +1,10 @@
-import { PrismaService } from '../src/prisma.service';
-import { BadRequestException, Injectable } from '@nestjs/common';
+
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { EMAIL_IN_USE, NOT_FOUND, USER } from './constants';
 import { Prisma } from '@prisma/client';
 import { UserDto } from './dto/updateUser.dto';
 import { hash } from 'argon2';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class UserService {
@@ -37,8 +38,9 @@ export class UserService {
  }
 
  async updateProfile(id: number, dto: UserDto) {
-  const isSameUser = await this.prisma.user.findUnique({
-   where:{email:dto.email}
+  const isSameUser = await this.prisma.user.findFirst({
+   where:{OR:[{ email: dto.email }, {id}]}
+    
   })
 
   if (isSameUser && isSameUser.id !== id) {
@@ -61,18 +63,25 @@ export class UserService {
  }
 
  async toggleFavorites(id: number, productId: string) {
-  const user = await this.getById(id)
-  const isExist = user.favorites.some((el) => el.id === +productId)
-  
-  await this.prisma.user.update({
-   where: {
-    id
-   },
-   data: {
-    favorites: {
-     [isExist ? 'disconnect' :'connect']:{id:productId}
+  try {
+   const user = await this.getById(id)
+   const isExist = user.favorites.some((el) => el.id === +productId)
+   await this.prisma.user.update({
+    where: {
+     id
+    },
+    data: {
+     favorites: {
+      [isExist ? 'disconnect' :'connect']:{id:+productId}
+     }
     }
-   }
-  })
+   })
+
+   const message = isExist ? "Removed from Favorites" : "Added to Favorites"
+   return message
+  } catch (e) {
+   Logger.error(e)
+  }
+
  }
 }
