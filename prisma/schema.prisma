@@ -61,6 +61,7 @@ model OrderItem {
   order     Order    @relation(fields: [orderId], references: [id])
   productId Int      @map("product_id")
   orderId   Int      @map("order_id")
+  @@map("order_item")
 }
 
 model Category {
