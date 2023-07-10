@@ -1,4 +1,4 @@
-import { PrismaService } from './../prisma.service';
+import { PrismaService } from '../src/prisma.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { EMAIL_IN_USE, NOT_FOUND, USER } from './constants';
 import { Prisma } from '@prisma/client';
