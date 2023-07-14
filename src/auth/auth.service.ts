@@ -70,11 +70,11 @@ export class AuthService {
   const data = { id: userId }
 
   const accessToken = this.jwt.sign(data, {
-   expiresIn: '1h'
+   expiresIn: 60
   })
 
   const refreshToken = this.jwt.sign(data, {
-   expiresIn: '7d'
+   expiresIn: '70d'
   })
 
   return { accessToken, refreshToken }
@@ -82,7 +82,8 @@ export class AuthService {
  private returnUserFields(user: User) {
   return {
    id: user.id,
-   email: user.email
+   email: user.email,
+   name:user.name
   }
  }
 
@@ -94,7 +95,6 @@ export class AuthService {
    throw new NotFoundException(NOT_FOUND)
   }
   else {
-   console.log(verify(user.password, dto.password))
    const validated = await verify(user.password, dto.password)
    if (!validated) {
     throw new UnauthorizedException(INVALID_PASSWORD)

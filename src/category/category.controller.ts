@@ -27,8 +27,8 @@ export class CategoryController {
     return this.categoryService.create()
   }
 
-  @Put('update/:id')
-  @UsePipes(new ValidationPipe)
+
+  @Put("update/:id")
   @HttpCode(200)
   @Auth()
   async update(@Param('id') id:string, @Body() dto:CreateCategoryDto) {

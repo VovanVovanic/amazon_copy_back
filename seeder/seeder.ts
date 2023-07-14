@@ -41,7 +41,7 @@ const createProduct = async (amount: number) => {
   })
   products.push(product)
  }
- console.log(`Created: ${products}`)
+ 
 }
 
 const main = async () => {

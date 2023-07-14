@@ -29,6 +29,7 @@ export class StatisticService {
      total+=el.rating
     })
     return {
+name:user.name,
      orders: orders.length,
      reviews: reviews.length,
      favorites: favorites.length,

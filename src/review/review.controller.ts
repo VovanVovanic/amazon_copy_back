@@ -5,7 +5,7 @@ import { CurrentUser } from 'src/decorators/currentUser';
 import { ReviewDto } from './dto/review.dto';
 import { ReviewService } from './review.service';
 
-@Controller('review')
+@Controller('reviews')
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) { }
   
@@ -18,7 +18,7 @@ export class ReviewController {
   @UsePipes(new ValidationPipe)
   @HttpCode(200)
   @Auth()
-  async update(
+  async create(
     @CurrentUser('id') id:number,
     @Param('productId') productId: string,
     @Body() dto: ReviewDto) {
