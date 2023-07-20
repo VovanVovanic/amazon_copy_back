@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { IsNumber, IsString, Max, Min } from "class-validator"
 
 export class ReviewDto{

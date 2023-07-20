@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { JwtStrategy } from './jwt.strategy';
 import { getJwtConfig } from './../config/jwt.config';
 import { ConfigService } from '@nestjs/config';

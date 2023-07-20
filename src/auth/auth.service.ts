@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { faker } from '@faker-js/faker';
 import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { faker } from '@faker-js/faker';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
@@ -111,7 +112,7 @@ export class ProductService {
         slug: "",
         description: "",
         price: 0,
-        categoryId: 0
+        categoryId: 1
       }
     })
   }

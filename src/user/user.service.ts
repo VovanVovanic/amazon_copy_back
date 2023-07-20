@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { EMAIL_IN_USE, NOT_FOUND, USER } from './constants';

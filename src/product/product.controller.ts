@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Auth } from 'src/decorators/auth.decorator';
 import { GetAllProductsDto, ProductDto } from './dto/products.dto';
@@ -26,7 +27,7 @@ export class ProductController {
   async getBySlug(@Param('slug')slug:string ) {
     return await this.productService.byFeature(undefined, slug)
   }
-  @Get('by_scategory/:slug')
+  @Get('by_category/:slug')
   async getByCategory(@Param('slug')slug:string ) {
    return await this.productService.byCategory(slug)  
 }

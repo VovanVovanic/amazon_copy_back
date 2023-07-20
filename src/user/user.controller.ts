@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Body, Controller, Get, HttpCode, Param, Patch, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Auth } from 'src/decorators/auth.decorator';
 import { CurrentUser } from 'src/decorators/currentUser';
