@@ -16,17 +16,24 @@ import { Auth } from 'src/decorators/auth.decorator';
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
-  @Get()
-  @Auth()
+  @Get('user')
+  @Auth('user')
   @HttpCode(200)
-  async getAllOrders(@CurrentUser('id') userId: number) {
-    return this.orderService.getAll(userId);
+  async getAllUsersOrders(@CurrentUser('id') userId: number) {
+    return this.orderService.getAllForUser(userId);
+  }
+
+  @Get('amin')
+  @Auth('admin')
+  @HttpCode(200)
+  async getAllOrders() {
+    return this.orderService.getAll();
   }
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Post()
-  @Auth()
+  @Auth('user')
   placeOrder(@Body() dto: OrderDto, @CurrentUser('id') userId: number) {
     return this.orderService.placeOrder(dto, userId);
   }

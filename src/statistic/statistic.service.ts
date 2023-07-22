@@ -5,40 +5,29 @@ import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class StatisticService {
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly user: UserService,
+  ) {}
 
- constructor(private readonly prisma: PrismaService,
-  private readonly user: UserService,
- ) { }
+  async getStatystic() {
+    try {
+      const users = await this.prisma.user.count();
+      const orders = await this.prisma.order.count();
+      const reviews = await this.prisma.review.count();
+      const total = await this.prisma.order.aggregate({
+        _sum: { total: true },
+      });
 
- async getStatystic(userId: number) {
-  try {
-   const user = await this.user.getById(userId, {
-    orders: {
-      select:{items:true}
-    },
-    reviews: true,
-    favorites:true
-   })
-   if (!user) {
-    throw new NotFoundException(NOT_FOUND)
-   }
-   else {
-    const { orders, reviews, favorites } = user
-    let total: number = 0
-    reviews.forEach((el) => {
-     total+=el.rating
-    })
-    return {
-name:user.name,
-     orders: orders.length,
-     reviews: reviews.length,
-     favorites: favorites.length,
-     totalCountReviews: total
+      return [
+        { name: 'Users', value: users },
+        { name: 'Orders', value: orders },
+        { name: 'Reviews', value: reviews },
+        { name: 'Total', value: total },
+      ];
+    } catch (e) {
+      Logger.error(e);
+      return e;
     }
-   }
-  } catch (e) {
-   Logger.error(e)
-   return e
   }
- }
 }

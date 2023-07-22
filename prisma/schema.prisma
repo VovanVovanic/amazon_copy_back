@@ -21,6 +21,7 @@ model User {
   phone      String    @default("")
   orders     Order[]
   reviews    Review[]
+  isAdmin    Boolean   @default(false) @map("is_admin")
   favorites  Product[]
   
 }

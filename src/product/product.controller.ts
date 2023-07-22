@@ -33,21 +33,21 @@ export class ProductController {
 }
   @Post('create')
   @HttpCode(200)
-  @Auth()
+  @Auth('admin')
   async create() {
     return this.productService.create()
   }
 
   @Delete('delete/:id')
   @HttpCode(200)
-  @Auth()
+  @Auth('admin')
   async delete(@Param('id') id:string) {
     return this.productService.delete(+id)
   }
 
   @Put("update/:id")
   @HttpCode(200)
-  @Auth()
+  @Auth('admin')
   async update(@Param('id') id:string, @Body() dto:ProductDto) {
     return this.productService.update(+id, dto)
   }

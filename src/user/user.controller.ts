@@ -12,21 +12,21 @@ export class UserController {
   ) { }
    
   @Get('profile')
-  @Auth()
+  @Auth('user')
   async getProfile(@CurrentUser('id') id:number) {
     return await this.userService.getById(id);
   }
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
-  @Auth()
+  @Auth('user')
   @Put('profile/update')
   async updateProfile(@CurrentUser('id') id:number, @Body() dto: UserDto) {
     return await this.userService.updateProfile(id, dto);
   }
 
   @HttpCode(200)
-  @Auth()
+  @Auth('user')
   @Patch('profile/favorites/:productId')
   async toggleFavorites(@CurrentUser('id') id:number, @Param("productId") productId:string) {
     return await this.userService.toggleFavorites(id, productId);

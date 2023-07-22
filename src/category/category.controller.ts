@@ -23,7 +23,7 @@ export class CategoryController {
 
   @Post('create')
   @HttpCode(200)
-  @Auth()
+  @Auth('admin')
   async create() {
     return this.categoryService.create()
   }
@@ -31,14 +31,14 @@ export class CategoryController {
 
   @Put("update/:id")
   @HttpCode(200)
-  @Auth()
+  @Auth('admin')
   async update(@Param('id') id:string, @Body() dto:CreateCategoryDto) {
     return this.categoryService.update(+id, dto)
   }
 
   @Delete('delete/:id')
   @HttpCode(200)
-  @Auth()
+  @Auth('admin')
   async delete(@Param('id') id:string) {
     return this.categoryService.delete(+id)
   }

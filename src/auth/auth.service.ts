@@ -7,13 +7,14 @@ import { hash, verify } from 'argon2';
 import { PrismaService } from 'src/prisma.service';
 import { AuthDto } from './dto/auth.dto';
 import { INVALID_PASSWORD, INVALID_REFRESH_TOKEN, NOT_FOUND, USER_EXIST } from './constants';
-import { TokenDto } from './dto/token.dto';
+import { UserService } from 'src/user/user.service';
 
 
 @Injectable()
 export class AuthService {
  constructor(private readonly prismaService: PrismaService,
-  private readonly jwt: JwtService
+  private readonly jwt: JwtService,
+  private readonly userService: UserService
  ) { }
 
  async getNewTokens(refreshToken: string) {
@@ -22,9 +23,7 @@ export class AuthService {
    throw new UnauthorizedException(INVALID_REFRESH_TOKEN)
   }
   else {
-   const user = await this.prismaService.user.findUnique({
-    where: { id: res.id }
-   })
+   const user = await this.userService.getById(res.id,{isAdmin:true})
    const tokens = await this.getTokens(user.id)
    return {
     user: this.returnUserFields(user),
@@ -80,11 +79,12 @@ export class AuthService {
 
   return { accessToken, refreshToken }
  }
- private returnUserFields(user: User) {
+ private returnUserFields(user: Partial<User>) {
   return {
    id: user.id,
    email: user.email,
-   name:user.name
+   name:user.name,
+   isAdmin: user.isAdmin
   }
  }
 

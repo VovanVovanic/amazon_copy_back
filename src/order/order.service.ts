@@ -2,9 +2,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { OrderDto, PaymentStatusDto } from './dto/dto';
-import { returnedProduct } from 'src/product/constants';
 import * as YooKassa from 'yookassa'
-import { faker } from '@faker-js/faker';
 import { EnumOrderStatus } from '@prisma/client';
 import { returnedOrders } from './constants';
 
@@ -16,9 +14,16 @@ const yookassa = new YooKassa({
 export class OrderService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getAll(userId:number) {
+  async getAllForUser(userId:number) {
     return await this.prisma.order.findMany({
       where:{userId},
+      orderBy: { createdAt: 'desc' },
+      select:returnedOrders
+    });
+  }
+
+  async getAll() {
+    return await this.prisma.order.findMany({
       orderBy: { createdAt: 'desc' },
       select:returnedOrders
     });
