@@ -6,6 +6,7 @@ export const USER: Prisma.UserSelect = {
   avatarPath: true,
   password: false,
   phone: true,
+  isAdmin:true
 };
 
 export const NOT_FOUND = 'User not found';

@@ -1,7 +1,11 @@
 /* eslint-disable prettier/prettier */
 import { faker } from '@faker-js/faker';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { CategoryService } from 'src/category/category.service';
+import { PaginationService } from 'src/pagination/pagination.service';
 import { PrismaService } from 'src/prisma.service';
+import { v4 as uuidv4 } from 'uuid';
 import {
   NOT_FOUND,
   returnedProduct,
@@ -12,10 +16,6 @@ import {
   GetAllProductsDto,
   ProductDto,
 } from './dto/products.dto';
-import { v4 as uuidv4 } from 'uuid';
-import { PaginationService } from 'src/pagination/pagination.service';
-import { Prisma } from '@prisma/client';
-import { CategoryService } from 'src/category/category.service';
 import { convertToNumber } from './utils';
 @Injectable()
 export class ProductService {
@@ -23,7 +23,7 @@ export class ProductService {
     private readonly prisma: PrismaService,
     private readonly pagination: PaginationService,
     private readonly categoryService: CategoryService,
-  ) {}
+  ) { }
 
   async getAll(dto: GetAllProductsDto) {
     const { perPage, skip } = this.pagination.getPagination(dto);
@@ -106,12 +106,8 @@ export class ProductService {
 
   private getRatingsFilter(ratings: number[]): Prisma.ProductWhereInput {
     return {
-      reviews: {
-        some: {
-          rating: {
-            in: ratings,
-          },
-        },
+      averageRating: {
+        in: ratings,
       },
     };
   }

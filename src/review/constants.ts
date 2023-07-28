@@ -8,4 +8,7 @@ export const returnedReview: Prisma.ReviewSelect = {
   user: {
     select: USER,
   },
+  product: {
+    select:{name:true}
+  }
 };

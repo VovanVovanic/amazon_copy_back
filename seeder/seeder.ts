@@ -32,7 +32,7 @@ const createProduct = async (amount: number) => {
         //   },
         // },
         //user: { connect: { id: 4 } },
-        category:{connect:{id:22}},
+        category:{connect:{id:12}},
         reviews: {
           create: [
             {
@@ -59,7 +59,7 @@ const createProduct = async (amount: number) => {
 };
 
 const main = async () => {
-  await createProduct(14);
+  await createProduct(10);
 };
 
 main()

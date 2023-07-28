@@ -8,7 +8,7 @@ export class StatisticController {
 
   @Get()
   @Auth('admin')
-  async getStatystic() {
-    return this.statisticService.getStatystic();
+  async getStatistic() {
+    return this.statisticService.getStatistic();
   }
 }

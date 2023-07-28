@@ -10,7 +10,7 @@ export class StatisticService {
     private readonly user: UserService,
   ) {}
 
-  async getStatystic() {
+  async getStatistic() {
     try {
       const users = await this.prisma.user.count();
       const orders = await this.prisma.order.count();
@@ -20,10 +20,10 @@ export class StatisticService {
       });
 
       return [
-        { name: 'Users', value: users },
-        { name: 'Orders', value: orders },
-        { name: 'Reviews', value: reviews },
-        { name: 'Total', value: total },
+        { name: 'Users in the system', value: users },
+        { name: 'Orders made', value: orders },
+        { name: 'Reviews left', value: reviews },
+        { name: 'Total spent by all users', value: `$${total._sum.total}` },
       ];
     } catch (e) {
       Logger.error(e);
