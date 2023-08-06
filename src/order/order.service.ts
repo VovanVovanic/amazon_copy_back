@@ -34,7 +34,6 @@ export class OrderService {
       acc += (el.price*el.quantity)
       return acc
     },0)
-    console.log(total, "ttt")
     const res = await this.prisma.order.create({
       data: {
         status: dto.status,

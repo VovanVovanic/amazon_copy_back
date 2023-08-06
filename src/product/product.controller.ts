@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Auth } from 'src/decorators/auth.decorator';
-import { GetAllProductsDto, ProductDto } from './dto/products.dto';
+import { EnumProductsSort, GetAllProductsDto, ProductDto } from './dto/products.dto';
 import { ProductService } from './product.service';
 
 @Controller('products')
@@ -27,9 +27,9 @@ export class ProductController {
   async getBySlug(@Param('slug')slug:string ) {
     return await this.productService.byFeature(undefined, slug)
   }
-  @Get('by_category/:slug')
-  async getByCategory(@Param('slug')slug:string ) {
-   return await this.productService.byCategory(slug)  
+  @Get('by_category/:slug/:sort')
+  async getByCategory(@Param('slug') slug: string, @Param('sort') sort: EnumProductsSort) {
+   return await this.productService.byCategory(slug, sort)  
 }
   @Post('create')
   @HttpCode(200)

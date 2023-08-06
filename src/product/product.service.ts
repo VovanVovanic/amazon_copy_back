@@ -139,10 +139,14 @@ export class ProductService {
     return product;
   }
 
-  async byCategory(categorySlug: string) {
+  async byCategory(categorySlug: string, sort: EnumProductsSort = EnumProductsSort.NEWEST) {
     const product = await this.prisma.product.findMany({
-      where: { category: { slug: categorySlug } },
-
+      where: {
+        category: {
+          slug: categorySlug,
+        },
+      },
+      orderBy: this.getSortOptions(sort),
       select: returnedProductExpanded,
     });
     if (!product) {
@@ -158,13 +162,13 @@ export class ProductService {
     }
     const products = await this.prisma.product.findMany({
       where: {
-        category: { name: currentProduct.name },
+        category: { name: currentProduct.category.name },
         NOT: {
           id: currentProduct.id,
         },
       },
       orderBy: { createdAt: 'desc' },
-      select: returnedProduct,
+      select: returnedProductExpanded,
     });
     return products;
   }

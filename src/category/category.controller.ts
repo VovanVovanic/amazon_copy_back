@@ -1,5 +1,16 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Auth } from 'src/decorators/auth.decorator';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/createCategory.dto';
@@ -16,8 +27,9 @@ export class CategoryController {
   async getById(@Param('id')id:string ) {
     return await this.categoryService.byFeature(+id)
   }
-  @Get('by_slug/:slug')
-  async getBySlug(@Param('slug')slug:string ) {
+  @Get('by_slug/:slug/:sort')
+  @UsePipes(new ValidationPipe)
+  async getBySlug(@Param('slug') slug: string, @Param('sort') sort: string) {
     return await this.categoryService.byFeature(undefined, slug)
   }
 
