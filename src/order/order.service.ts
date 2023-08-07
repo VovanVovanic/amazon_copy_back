@@ -23,11 +23,13 @@ export class OrderService {
   }
 
   async getAll() {
-    return await this.prisma.order.findMany({
+   const orders = await this.prisma.order.findMany({
       orderBy: { createdAt: 'desc' },
       select:returnedOrders
-    });
+   });
+    return orders
   }
+
   async placeOrder(dto: OrderDto, userId:number) {
 
     const total = dto.items.reduce((acc, el)=>{

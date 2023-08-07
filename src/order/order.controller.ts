@@ -23,7 +23,7 @@ export class OrderController {
     return this.orderService.getAllForUser(userId);
   }
 
-  @Get('admin')
+  @Get()
   @Auth('admin')
   @HttpCode(200)
   async getAllOrders() {

@@ -33,7 +33,8 @@ export class ReviewController {
     @Param('productId') productId: string,
     @Body() dto: ReviewDto,
   ) {
-    return this.reviewService.create(id, dto, +productId);
+    return this.reviewService.create(id, dto, +productId)
+    .then(()=>this.reviewService.updateProductAverageRating(+productId))
   }
 
   @Get('average/:productId')

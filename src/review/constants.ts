@@ -12,3 +12,4 @@ export const returnedReview: Prisma.ReviewSelect = {
     select:{name:true}
   }
 };
+export const PRODUCT_NOT_FOUND = "Product not found"
