@@ -23,9 +23,9 @@ export class CategoryController {
   async getAll() {
     return await this.categoryService.getAll()
   }
-  @Get('by_id/:id')
-  async getById(@Param('id')id:string ) {
-    return await this.categoryService.byFeature(+id)
+  @Get('by_id/:id/:sort')
+  async getById(@Param('id')id:string, @Param('sort') sort: string ) {
+    return await this.categoryService.byFeature(+id,undefined)
   }
   @Get('by_slug/:slug/:sort')
   @UsePipes(new ValidationPipe)

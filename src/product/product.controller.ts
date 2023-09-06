@@ -3,6 +3,7 @@ import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UsePi
 import { Auth } from 'src/decorators/auth.decorator';
 import { EnumProductsSort, GetAllProductsDto, ProductDto } from './dto/products.dto';
 import { ProductService } from './product.service';
+import { CreateProductDto } from './dto/createProduct.dto';
 
 @Controller('products')
 export class ProductController {
@@ -20,8 +21,8 @@ export class ProductController {
   }
 
   @Get('by_id/:id')
-  async getById(@Param('id')id:string ) {
-    return await this.productService.byFeature(+id)
+  async getById(@Param('id') id: string) {
+    return await this.productService.byFeature(+id,undefined)
   }
   @Get('by_slug/:slug')
   async getBySlug(@Param('slug')slug:string ) {
@@ -34,14 +35,14 @@ export class ProductController {
   @Post('create')
   @HttpCode(200)
   @Auth('admin')
-  async create() {
-    return this.productService.create()
+  async create(@Body() dto:CreateProductDto) {
+    return this.productService.create(dto)
   }
 
   @Delete('delete/:id')
   @HttpCode(200)
   @Auth('admin')
-  async delete(@Param('id') id:string) {
+  async delete(@Param('id') id: string) {
     return this.productService.delete(+id)
   }
 

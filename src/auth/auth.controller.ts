@@ -1,9 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, HttpCode, Post, UsePipes, ValidationPipe } from '@nestjs/common';
-import { AuthDto } from './dto/auth.dto';
 import { AuthService } from './auth.service';
+import { AuthDto } from './dto/auth.dto';
 import { TokenDto } from './dto/token.dto';
-import { Auth } from 'src/decorators/auth.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -28,5 +27,6 @@ export class AuthController {
   @Post('login/refresh')
   async refresh(@Body() dto: TokenDto) {
     return await this.authService.getNewTokens(dto.refreshToken);
+
   }
 }

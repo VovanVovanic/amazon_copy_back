@@ -14,8 +14,12 @@ export class JwtStrategy extends PassportStrategy(Strategy){
  ) {
         super({
             jwtFromRequest:ExtractJwt.fromAuthHeaderAsBearerToken(),
-            ignoreExpiration:true,
-            secretOrKey: configService.get('JWT_SECRET')
+            ignoreExpiration:false,
+            secretOrKey: configService.get('JWT_SECRET'),
+            jsonWebTokenOptions: {
+                ignoreNotBefore: true,
+                ignoreExpiration:false,
+            }
         })
     }
     async validate({id}:Pick<User, 'id'>){

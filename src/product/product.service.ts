@@ -8,9 +8,9 @@ import { PrismaService } from 'src/prisma.service';
 import { v4 as uuidv4 } from 'uuid';
 import {
   NOT_FOUND,
-  returnedProduct,
-  returnedProductExpanded,
+  returnedProductExpanded
 } from './constants';
+import { CreateProductDto } from './dto/createProduct.dto';
 import {
   EnumProductsSort,
   GetAllProductsDto,
@@ -128,6 +128,7 @@ export class ProductService {
   }
 
   async byFeature(id?: number, slug?: string) {
+    console.log(id, "idid")
     const product = await this.prisma.product.findFirst({
       where: { OR: [{ id }, { slug }] },
 
@@ -173,33 +174,34 @@ export class ProductService {
     return products;
   }
 
-  async create() {
+  async create(dto: CreateProductDto) {
+    const { name, description, price, categoryId } = dto
     return await this.prisma.product.create({
       data: {
-        name: '',
-        slug: '',
-        description: '',
-        price: 0,
-        categoryId: 1,
+        name,
+        slug: faker.helpers.slugify(`${name} ${uuidv4()}`),
+        description,
+        price,
+        categoryId: +categoryId
       },
     });
   }
 
   async update(id: number, dto: ProductDto) {
-    const { description, images, price, name, categoryId } = dto;
-    return await this.prisma.product.update({
+    const { description, price, name, categoryId } = dto
+    const product = this.prisma.product.update({
       where: {
         id,
       },
       data: {
         description,
-        images,
-        price,
+        price: +price,
         name,
         slug: faker.helpers.slugify(`${dto.name} ${uuidv4()}`),
         category: { connect: { id: +categoryId } },
       },
     });
+    return product
   }
 
   async delete(id: number) {

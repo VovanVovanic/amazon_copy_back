@@ -6,7 +6,7 @@ import { User } from '@prisma/client';
 import { hash, verify } from 'argon2';
 import { PrismaService } from 'src/prisma.service';
 import { AuthDto } from './dto/auth.dto';
-import { INVALID_PASSWORD, INVALID_REFRESH_TOKEN, NOT_FOUND, USER_EXIST } from './constants';
+import { INVALID_PASSWORD, INVALID_REFRESH_TOKEN, NOT_FOUND, REFRESH_TOKEN_EXPIRED, USER_EXIST } from './constants';
 import { UserService } from 'src/user/user.service';
 
 
@@ -18,18 +18,24 @@ export class AuthService {
  ) { }
 
  async getNewTokens(refreshToken: string) {
-  const res = await this.jwt.verifyAsync(refreshToken)
-  if (!res) {
-   throw new UnauthorizedException(INVALID_REFRESH_TOKEN)
-  }
-  else {
-   const user = await this.userService.getById(res.id,{isAdmin:true})
-   const tokens = await this.getTokens(user.id)
-   return {
-    user: this.returnUserFields(user),
-    ...tokens
+  try {
+   const res = await this.jwt.verifyAsync(refreshToken)
+   if (!res) {
+    throw new UnauthorizedException(INVALID_REFRESH_TOKEN)
+   }
+   else {
+    const user = await this.userService.getById(res.id,{isAdmin:true})
+    const tokens = await this.getTokens(user.id)
+    return {
+     user: this.returnUserFields(user),
+     ...tokens
+    }
    }
   }
+  catch (error) {
+   throw new UnauthorizedException(REFRESH_TOKEN_EXPIRED)
+  }
+
  }
 
  async login(dto: AuthDto) {
@@ -70,11 +76,11 @@ export class AuthService {
   const data = { id: userId }
 
   const accessToken = this.jwt.sign(data, {
-   expiresIn: 60
+   expiresIn: '15m'
   })
 
   const refreshToken = this.jwt.sign(data, {
-   expiresIn: '70d'
+   expiresIn: '30d'
   })
 
   return { accessToken, refreshToken }
