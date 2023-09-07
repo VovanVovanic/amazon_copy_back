@@ -9,7 +9,7 @@ export class ReviewService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly product: ProductService,
-  ) {}
+  ) { }
 
   async getAll() {
     return await this.prisma.review.findMany({
@@ -29,19 +29,19 @@ export class ReviewService {
     });
   }
   async updateProductAverageRating(productId: number) {
-    const averageRating = await this.getAverageRating(productId)
+    const averageRating = await this.getAverageRating(productId);
     if (!averageRating) {
-      throw new NotFoundException(PRODUCT_NOT_FOUND)
+      throw new NotFoundException(PRODUCT_NOT_FOUND);
     }
     const updatedProduct = await this.prisma.product.update({
       where: {
-        id:productId
+        id: productId,
       },
       data: {
-        averageRating: +averageRating.avg_rating
-      }
-    })
-    return updatedProduct
+        averageRating: +averageRating.avg_rating,
+      },
+    });
+    return updatedProduct;
   }
   async getAverageRating(productId: number) {
     return this.prisma.review

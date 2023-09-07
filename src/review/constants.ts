@@ -9,7 +9,7 @@ export const returnedReview: Prisma.ReviewSelect = {
     select: USER,
   },
   product: {
-    select:{name:true}
-  }
+    select: { name: true, id: true },
+  },
 };
-export const PRODUCT_NOT_FOUND = "Product not found"
+export const PRODUCT_NOT_FOUND = 'Product not found';
