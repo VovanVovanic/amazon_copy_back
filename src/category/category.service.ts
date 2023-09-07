@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { NOT_FOUND, returnedCategory } from './constants';
+import { ALREADY_EXIST, NOT_FOUND, returnedCategory } from './constants';
 import { CreateCategoryDto } from './dto/createCategory.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { faker } from '@faker-js/faker';
@@ -29,13 +29,21 @@ export class CategoryService {
     })
   }
 
-  async create() {
-    return await this.prisma.category.create({
-      data: {
-        name: "",
-        slug: ""
-      }
+  async create(dto: CreateCategoryDto) {
+    const category = await this.prisma.category.findFirst({
+      where: { name: dto.name }
     })
+
+    if (category) throw new ForbiddenException(ALREADY_EXIST)
+    else {
+      return await this.prisma.category.create({
+        data: {
+          ...dto,
+          slug: faker.helpers.slugify(`${dto.name} ${uuidv4()}`)
+        }
+      })
+    }
+
   }
 
   async update(id: number, dto: CreateCategoryDto) {
