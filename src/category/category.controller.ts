@@ -52,6 +52,7 @@ export class CategoryController {
   @HttpCode(200)
   @Auth('admin')
   async delete(@Param('id') id: string) {
+    console.log(id, "idid")
     return this.categoryService.delete(+id)
   }
 }
