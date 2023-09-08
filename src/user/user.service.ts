@@ -27,10 +27,10 @@ export class UserService {
       slug: true,
       category: {
        select: {
-        slug:true
+        slug: true
        }
       },
-      reviews:true
+      reviews: true
      }
     },
     ...selectObject
@@ -46,8 +46,8 @@ export class UserService {
 
  async updateProfile(id: number, dto: UserDto) {
   const isSameUser = await this.prisma.user.findFirst({
-   where:{OR:[{ email: dto.email }, {id}]}
-    
+   where: { OR: [{ email: dto.email }, { id }] }
+
   })
 
   if (isSameUser && isSameUser.id !== id) {
@@ -55,7 +55,7 @@ export class UserService {
   }
   else {
    const user = await this.getById(id)
-   const{password, ...rest} = dto
+   const { password, ...rest } = dto
    const updatedUser = await this.prisma.user.update({
     where: {
      id
@@ -69,6 +69,12 @@ export class UserService {
   }
  }
 
+ async deleteProfile(id: number) {
+  return await this.prisma.user.delete({
+   where: { id },
+  });
+ }
+
  async toggleFavorites(id: number, productId: string) {
   try {
    const user = await this.getById(id)
@@ -79,7 +85,7 @@ export class UserService {
     },
     data: {
      favorites: {
-      [isExist ? 'disconnect' :'connect']:{id:+productId}
+      [isExist ? 'disconnect' : 'connect']: { id: +productId }
      }
     }
    })
