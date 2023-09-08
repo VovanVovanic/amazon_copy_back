@@ -9,7 +9,7 @@ export class ReviewService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly product: ProductService,
-  ) { }
+  ) {}
 
   async getAll() {
     return await this.prisma.review.findMany({

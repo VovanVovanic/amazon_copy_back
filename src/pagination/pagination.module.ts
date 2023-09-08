@@ -6,6 +6,6 @@ import { PrismaService } from 'src/prisma.service';
 @Module({
   controllers: [PaginationController],
   providers: [PaginationService, PrismaService],
-  exports:[PaginationService]
+  exports: [PaginationService],
 })
 export class PaginationModule {}
