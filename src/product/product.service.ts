@@ -27,6 +27,7 @@ export class ProductService {
 
   async getAll(dto: GetAllProductsDto) {
     const { perPage, skip } = this.pagination.getPagination(dto);
+
     const filters = this.createFilters(dto);
     const products = await this.prisma.product.findMany({
       where: filters,
@@ -35,6 +36,7 @@ export class ProductService {
       take: perPage,
       select: returnedProductExpanded,
     });
+    console.log(products.length, perPage, "prod")
     return {
       products,
       length: await this.prisma.product.count({
@@ -176,12 +178,13 @@ export class ProductService {
 
   async create(dto: CreateProductDto) {
     const { name, description, price, categoryId } = dto
+
     return await this.prisma.product.create({
       data: {
         name,
         slug: faker.helpers.slugify(`${name} ${uuidv4()}`),
         description,
-        price,
+        price: +price,
         categoryId: +categoryId
       },
     });

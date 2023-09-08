@@ -6,11 +6,11 @@ import { PaginationDto } from './dto/pagination.dto';
 export class PaginationService {
  constructor(private readonly prisma: PrismaService) { }
 
- getPagination(dto: PaginationDto, defaultPerPage = 30) {
-  const page = dto.page ? +dto.page : 1
-  const perPage = dto.perPage ? +dto.perPage : defaultPerPage
+ getPagination(dto: PaginationDto, defaultPerPage = 300000) {
+  const page = dto.page ? +dto.page : 1;
+  const perPage = dto.perPage ? +dto.perPage : defaultPerPage;
 
-  const skip = (page - 1) * perPage
-  return{perPage,skip}
+  const skip = (page - 1) * perPage;
+  return { perPage, skip };
  }
 }
