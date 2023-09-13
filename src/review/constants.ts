@@ -1,5 +1,5 @@
-import { Prisma } from '@prisma/client';
-import { USER } from 'src/user/constants';
+import { Prisma } from "@prisma/client";
+import { USER } from "src/user/constants";
 export const returnedReview: Prisma.ReviewSelect = {
   id: true,
   createdAt: true,
@@ -12,4 +12,4 @@ export const returnedReview: Prisma.ReviewSelect = {
     select: { name: true, id: true },
   },
 };
-export const PRODUCT_NOT_FOUND = 'Product not found';
+export const PRODUCT_NOT_FOUND = "Product not found";

@@ -1,6 +1,6 @@
-import { returnedCategory } from '../category/constants';
-import { returnedReview } from '../review/constants';
-import { Prisma } from '@prisma/client';
+import { returnedCategory } from "../category/constants";
+import { returnedReview } from "../review/constants";
+import { Prisma } from "@prisma/client";
 
 export const returnedProduct: Prisma.ProductSelect = {
   images: true,
@@ -16,9 +16,9 @@ export const returnedProductExpanded: Prisma.ProductSelect = {
   ...returnedProduct,
   reviews: {
     select: returnedReview,
-    orderBy: { createdAt: 'desc' },
+    orderBy: { createdAt: "desc" },
   },
   category: { select: returnedCategory },
 };
 
-export const NOT_FOUND = 'Product not found';
+export const NOT_FOUND = "Product not found";
