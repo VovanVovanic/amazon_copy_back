@@ -16,9 +16,10 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/  register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "seed": "ts-node seeder/seeder.ts"
+    "seed": "ts-node seeder/seeder.ts",
+    "prettier": "prettier hooks/*.ts app/**/*.tsx components/**/*.tsx components/**/*.ts mocks/src/*.ts --write"
   },
   "dependencies": {
     "@faker-js/faker": "^8.0.2",

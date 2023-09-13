@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { IsString } from "class-validator";
 
-export class CreateCategoryDto{
+export class CreateCategoryDto {
   @IsString()
- name: string
+  name: string;
 }

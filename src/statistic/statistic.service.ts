@@ -1,6 +1,5 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { NOT_FOUND } from 'src/user/constants';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()

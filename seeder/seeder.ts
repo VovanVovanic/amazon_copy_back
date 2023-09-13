@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import { getRandomNumber } from './../utils/generateRandomNumber';
-import { generateSlug } from './../utils/generateSlug';
 import { faker } from '@faker-js/faker';
 import { PrismaClient, Product } from '@prisma/client';
 import * as dotenv from 'dotenv';

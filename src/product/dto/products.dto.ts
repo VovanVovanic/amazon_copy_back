@@ -1,55 +1,60 @@
 /* eslint-disable prettier/prettier */
-import { PaginationDto } from './../../pagination/dto/pagination.dto';
-import { ArrayMinSize, IsEnum, IsNumber, IsOptional, IsString } from "class-validator"
+import { PaginationDto } from "./../../pagination/dto/pagination.dto";
+import {
+  ArrayMinSize,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from "class-validator";
 
-export class ProductDto{
- @IsString()
- name: string
- 
- @IsNumber()
- price: number
- 
- @IsString()
- description: string
+export class ProductDto {
+  @IsString()
+  name: string;
 
- @IsString({ each: true })
- @ArrayMinSize(1)
- images: string[]
- 
- @IsString()
- categoryId: string
+  @IsNumber()
+  price: number;
+
+  @IsString()
+  description: string;
+
+  @IsString({ each: true })
+  @ArrayMinSize(1)
+  images: string[];
+
+  @IsString()
+  categoryId: string;
 }
 
-
-export enum EnumProductsSort{
- HIGH_PRICE = 'high-price',
- LOW_PRICE = "low-price",
- NEWEST = "newest",
- OLDEST = "oldest"
+export enum EnumProductsSort {
+  HIGH_PRICE = "high-price",
+  LOW_PRICE = "low-price",
+  NEWEST = "newest",
+  OLDEST = "oldest",
 }
 
-export class GetAllProductsDto extends PaginationDto{
- @IsOptional()
- @IsEnum(EnumProductsSort)
- sort?: EnumProductsSort
+export class GetAllProductsDto extends PaginationDto {
+  @IsOptional()
+  @IsEnum(EnumProductsSort)
+  sort?: EnumProductsSort;
 
- @IsString()
- @IsOptional()
- searchTerm?: string
+  @IsString()
+  @IsOptional()
+  searchTerm?: string;
 
- @IsString()
- @IsOptional()
- ratings?: string
+  @IsString()
+  @IsOptional()
+  ratings?: string;
 
- @IsString()
- @IsOptional()
- minPrice?: string
+  @IsString()
+  @IsOptional()
+  minPrice?: string;
 
- @IsString()
- @IsOptional()
- maxPrice?: string
+  @IsString()
+  @IsOptional()
+  maxPrice?: string;
 
- @IsString()
- @IsOptional()
- categoryId?: string
+  @IsString()
+  @IsOptional()
+  categoryId?: string;
 }

@@ -8,7 +8,6 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateCategoryDto } from 'src/category/dto/createCategory.dto';
 import { Auth } from 'src/decorators/auth.decorator';
 import { CurrentUser } from 'src/decorators/currentUser';
 import { ReviewDto } from './dto/review.dto';
