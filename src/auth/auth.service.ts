@@ -66,8 +66,8 @@ export class AuthService {
           email: dto.email,
           password: await hash(dto.password),
           avatarPath: faker.image.avatar(),
-          name: faker.person.firstName(),
-          phone: faker.phone.number("+371 ########"),
+          name: dto.name,
+          phone: dto.phone ? dto.phone : "",
         },
       });
 
