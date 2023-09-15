@@ -29,7 +29,7 @@ export class ProductService {
     const products = await this.prisma.product.findMany({
       where: filters,
       orderBy: this.getSortOptions(dto.sort),
-      skip,
+      skip: (skip > 1 && dto.searchTerm) ? 0 : skip,
       take: perPage,
       select: returnedProductExpanded,
     });
