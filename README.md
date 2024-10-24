@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+ Back en template for an online store. Uses all the services that any online store provides, such as selecting a product, adding a product to the cart, removing a product from the cart. There is also a payment simulation (Yukassa) This is a[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
 
